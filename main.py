@@ -9,23 +9,23 @@ import seaborn as sns
 
 def fetch_data(tickers, period="6mo"):
 
-    print(f"🔄 Fetching data for {tickers}...")
+    print(f" Fetching data for {tickers}...")
     data = yf.download(tickers, period=period, progress=False, auto_adjust=True)
     closing_prices = data['Close']
-    print("✅ Data fetched successfully!")
+    print(" Data fetched successfully!")
     return closing_prices
 
 
 def calculate_returns(price_data):
 
-    print("📊 Calculating daily returns...")
+    print(" Calculating daily returns...")
     returns = price_data.pct_change().dropna()
     return returns
 
 
 def calculate_risk_metrics(returns_data):
 
-    print("⚖️ Calculating risk metrics...")
+    print("⚖ Calculating risk metrics...")
     avg_annual_return = returns_data.mean() * 252
     annual_volatility = returns_data.std() * np.sqrt(252)
     sharpe_ratio = avg_annual_return / annual_volatility
@@ -34,7 +34,7 @@ def calculate_risk_metrics(returns_data):
 
 def plot_performance(price_data):
 
-    print("📈 Generating performance chart...")
+    print(" Generating performance chart...")
     plt.figure(figsize=(12, 6))
 
     normalized_data = (price_data / price_data.iloc[0] * 100)
@@ -53,7 +53,7 @@ def plot_performance(price_data):
 
 def plot_correlation_heatmap(returns_data):
 
-    print("🧮 Calculating correlation matrix...")
+    print("Calculating correlation matrix...")
     plt.figure(figsize=(10, 8))
 
     corr_matrix = returns_data.corr()
@@ -68,7 +68,7 @@ def plot_correlation_heatmap(returns_data):
 
 
 def monte_carlo_simulation(ticker, price_data, days=252, simulations=1000):
-    print(f"🔮 Running {simulations} Monte Carlo simulations for {ticker}...")
+    print(f" Running {simulations} Monte Carlo simulations for {ticker}...")
 
     returns = price_data[ticker].pct_change().dropna()
     mu = returns.mean()
@@ -114,7 +114,7 @@ def plot_monte_carlo(results, ticker):
     price_change = ((expected_price - results[0][0]) / results[0][0]) * 100
     confidence_interval = np.percentile(final_prices, [5, 95])
 
-    print(f"\n📈 {ticker} Monte Carlo Results:")
+    print(f"\n {ticker} Monte Carlo Results:")
     print(f"Expected price after {len(results)} days: ${expected_price:.2f}")
     print(f"Expected change: {price_change:+.2f}%")
     print(f"95% Confidence Interval: ${confidence_interval[0]:.2f} - ${confidence_interval[1]:.2f}")
